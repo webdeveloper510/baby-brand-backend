@@ -32,19 +32,19 @@ class BannerController extends Controller
             $banner_image->move(public_path('upload/Banner/'), $bannerFileName);
         }
         
-        $bannerTitle = $request->input('banner_title');
+        $bannerTime = $request->input('banner_time');
         $bannerText = $request->input('banner_text');
         $bannerFlag = $request->input('flag');
 
         if($request->id){
             $bannerContent = Banner::find($request->id);
-            $bannerTitle = $bannerTitle ? $bannerTitle : $bannerContent->banner_title;
+            $bannerTime = $bannerTime ? $bannerTime : $bannerContent->banner_time;
             $bannerText = $bannerText ? $bannerText : $bannerContent->banner_text;
             $customizedBannerUrl = $customizedBannerUrl ? $customizedBannerUrl : $bannerContent->banner_image;
             $bannerFlag = $bannerFlag ? $bannerFlag : $bannerContent->flag;
         }
    
-        $bannerContent->banner_title = $bannerTitle;
+        $bannerContent->banner_time = $bannerTime;
         $bannerContent->banner_text = $bannerText;
         $bannerContent->banner_image = $customizedBannerUrl;  
         $bannerContent->flag = $bannerFlag;      
