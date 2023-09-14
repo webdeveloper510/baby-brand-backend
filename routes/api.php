@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,8 @@ Route::delete('delete-banner-content/{id}', [BannerController::class,'deleteBann
 Route::get('get-testimonial', [TestimonialController::class,'getTestimonial']);
 Route::post('create-testimonial', [TestimonialController::class,'createTestimonial']);
 Route::delete('delete-testimonial/{id}', [TestimonialController::class,'deleteTestimonial']);
+
+// CategoryController routes
+Route::get('get-category', [CategoryController::class,'getCategory']);
+Route::post('create-category', [CategoryController::class,'createCategory']);
+Route::delete('delete-category/{id}', [CategoryController::class,'deleteCategory']);
