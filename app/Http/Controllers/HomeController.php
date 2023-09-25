@@ -24,13 +24,14 @@ class HomeController extends Controller
         $customizedStoryUrl = '';
         $customizedWinnerUrlImage ='';
 
+
         $homePageContent = new HomePageContent;
-        
+ 
         // Upload multiple winner image to public/HomePage folder
         $uploadedImageNames = [];
         if ($request->hasFile('winner_image')) {
             $winner_images = $request->file('winner_image');
-
+            echo json_encode($winner_images);
             foreach ($winner_images as $winner_image) {
                 $winnerfilename = $winner_image->getClientOriginalName();
                 $customizedWinnerUrl = $url . '/upload/HomePage/' . $winnerfilename;
@@ -41,7 +42,7 @@ class HomeController extends Controller
         }
        
         // Upload peekapoo image to public/HomePage folder
-        if ($request->hasFile('peekapoo_image')) {     
+        if ($request->hasFile('peekapoo_image')) {   
             $peekapoo_image = $request->file('peekapoo_image');
             $peekapoofilename = $peekapoo_image->getClientOriginalName();
             $customizedPeekapooUrl = $url . '/upload/HomePage/' . $peekapoofilename;
@@ -56,7 +57,7 @@ class HomeController extends Controller
             $story_image->move(public_path('upload/HomePage/'), $storyfilename);
         } 
 
-        $banner_time = $request->input('banner_time');
+        // $banner_time = $request->input('banner_time');
         $peekapoo_title = $request->input('peekapoo_title');
         $peekapoo_text = $request->input('peekapoo_text');
         $story_title = $request->input('story_title');
@@ -64,17 +65,17 @@ class HomeController extends Controller
 
         if($request->id){
             $homePageContent = HomePageContent::find($request->id);
-            $banner_time = $banner_time ? $banner_time : $homePageContent->banner_time;
+            // $banner_time = $banner_time ? $banner_time : $homePageContent->banner_time;
             $customizedWinnerUrlImage = $uploadedImageNames ? $customizedWinnerUrlImage : $homePageContent->winner_image;
             $peekapoo_title = $peekapoo_title ? $peekapoo_title : $homePageContent->peekapoo_title; 
             $peekapoo_text = $peekapoo_text ? $peekapoo_text : $homePageContent->peekapoo_text;
             $customizedPeekapooUrl = $customizedPeekapooUrl ? $customizedPeekapooUrl : $homePageContent->peekapoo_image;
             $story_title = $story_title ? $story_title : $homePageContent->story_title;            
             $story_text = $story_text ? $story_text : $homePageContent->story_text;            
-            $customizedStoryUrl = $customizedStoryUrl ? $customizedStoryUrl : $homePageContent->story_imag;         
+            $customizedStoryUrl = $customizedStoryUrl ? $customizedStoryUrl : $homePageContent->story_image;         
         }
    
-        $homePageContent->banner_time = $banner_time;
+        // $homePageContent->banner_time = $banner_time;
         $homePageContent->winner_image = $customizedWinnerUrlImage;
         $homePageContent->peekapoo_title = $peekapoo_title;
         $homePageContent->peekapoo_text = $peekapoo_text;
@@ -87,6 +88,15 @@ class HomeController extends Controller
         if($homePageContent){
             return response()->json(['data' => $homePageContent, 'message' => 'Home page content created successfully'], 201);
         }
+    }
+
+    //Get Images
+    public function getImages()
+    {
+        $data = HomePageContent::get('winner_image')->toArray();
+        $images =  json_decode($data[0]['winner_image']);
+        return response()->json(['data' => $images, 'message' => 'Created'], 201);
+
     }
 
     // Delete home page content

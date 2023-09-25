@@ -31,7 +31,7 @@ class ClientController extends Controller
             $faq_title = $faq_title ? $faq_title : $clientPageContent->faq_title;
             $faq_text = $faq_text ? $faq_text : $clientPageContent->faq_text;
         }
-   
+        
         $clientPageContent->faq_title = $faq_title;
         $clientPageContent->faq_text = $faq_text;
         $clientPageContent->save();
@@ -71,7 +71,7 @@ class ClientController extends Controller
         );
 
         if ($data) {
-            Mail::to('amit@codenomad.net')->send($contactUsMail);
+            Mail::to('info@babybrands.ca.')->send($contactUsMail);
         
             return response()->json(['data' => $data, 'message' => 'Your contact request has been submitted successfully.'], 201);
         }       

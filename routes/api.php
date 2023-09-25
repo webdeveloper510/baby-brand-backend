@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // HomeController routes
 Route::get('get-home-page-content', [HomeController::class,'getHomePageContent']);
+Route::get('get-images', [HomeController::class,'getImages']);
 Route::post('create-home-page-content', [HomeController::class,'createHomePageContent']);
 Route::delete('delete-home-page-content/{id}', [HomeController::class,'deleteHomePageContent']);
 
@@ -75,3 +76,5 @@ Route::delete('delete-testimonial/{id}', [TestimonialController::class,'deleteTe
 Route::get('get-category', [CategoryController::class,'getCategory']);
 Route::post('create-category', [CategoryController::class,'createCategory']);
 Route::delete('delete-category/{id}', [CategoryController::class,'deleteCategory']);
+
+
