@@ -52,6 +52,14 @@ class BlogController extends Controller
         }
     }
 
+
+    public function blogDetail($id){
+        $blogPageContent =  Blog::find($id);
+        if ($blogPageContent) {
+            return response()->json($blogPageContent);
+        }
+    }
+
     // Delete blog page content
     public function deleteBlogPageContent($id){
         $blogPageContent = Blog::find($id);

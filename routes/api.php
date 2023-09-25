@@ -46,6 +46,7 @@ Route::delete('delete-distributor-page-content/{id}', [DistributorController::cl
 
 // BlogController routes 
 Route::get('get-blog-page-content', [BlogController::class,'getBlogPageContent']);
+Route::get('full-blog/{id}', [BlogController::class,'blogDetail']);
 Route::post('create-blog-page-content', [BlogController::class,'createBlogPageContent']);
 Route::delete('delete-blog-page-content/{id}', [BlogController::class,'deleteBlogPageContent']);
 
