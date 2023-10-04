@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('get-home-page-content', [HomeController::class,'getHomePageContent']);
 Route::get('get-images', [HomeController::class,'getImages']);
 Route::post('create-home-page-content', [HomeController::class,'createHomePageContent']);
+Route::post('create-feature', [HomeController::class,'createFeature']);
+Route::get('get_feature', [HomeController::class,'get_feature']);
 Route::delete('delete-home-page-content/{id}', [HomeController::class,'deleteHomePageContent']);
 
 // ClientController routes

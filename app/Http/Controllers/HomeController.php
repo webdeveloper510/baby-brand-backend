@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\HomePageContent;
 use URL;
-
+use DB;
 class HomeController extends Controller
 {
     // Fetch home page content
@@ -105,5 +105,38 @@ class HomeController extends Controller
         $homePageContent->delete();
         return response()->json(['message' => 'Home page content deleted successfully'], 201);
     } 
+
+    public function createFeature(Request $request){
+        $url = URL::to('/');      
+        $customizedBlogPostUrl = '';         
+        // Upload blog post image to public upload/BlogPage folder
+        if ($request->hasFile('feature_image')) {
+            $feature_image = $request->file('feature_image');
+            $blogPostFileName = $feature_image->getClientOriginalName();
+            $customizedBlogPostUrl = $url . '/upload/feature/' . $blogPostFileName;
+            $feature_image->move(public_path('upload/feature/'), $blogPostFileName);
+        }
+        $feature_title = $request->input('feature_title');
+        $feature_text = $request->input('feature_text');
+        if($request->id){
+            $featured_data = DB::table('featured_product')->where("id", $request->id)->get()->toArray();
+            $existing = $featured_data[0]->feature_image;
+            $data = array('feature_title'=>$request->title,'feature_info'=>$request->feature_info,'feature_image'=>$customizedBlogPostUrl ? $customizedBlogPostUrl : $existing);
+            $done = DB::table('featured_product')->where("id", $request->id)->update($data);
+        }
+
+        $data = array('feature_title'=>$feature_title,'feature_info'=>$feature_text,'feature_image'=>$customizedBlogPostUrl ? $customizedBlogPostUrl : '');
+        $done = DB::table('featured_product')->insert($data);
+        
+
+        if($done){
+            return response()->json(['message' => 'Blog post created successfully'], 201);
+        }
+    }
+
+    public function get_feature(){
+        $feature = DB::table('featured_product')->get()->toArray();
+        return response()->json(['data'=>$feature,'message' => 'Blog post created successfully'], 201);
+    }
 
 }
