@@ -117,7 +117,7 @@ class HomeController extends Controller
             $feature_image->move(public_path('upload/feature/'), $blogPostFileName);
         }
         $feature_title = $request->input('feature_title');
-        $feature_text = $request->input('feature_text');
+        $feature_text = $request->input('feature_info');
         if($request->id){
             $featured_data = DB::table('featured_product')->where("id", $request->id)->get()->toArray();
             $existing = $featured_data[0]->feature_image;
